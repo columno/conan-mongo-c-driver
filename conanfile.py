@@ -4,7 +4,7 @@ from conans import ConanFile, CMake, tools
 
 class MongoCDriverConan(ConanFile):
     name = "mongo-c-driver"
-    version = "1.16.1"
+    version = "1.17.2"
     description = "A high-performance MongoDB driver for C"
     topics = ("conan", "libmongoc", "mongodb")
     url = "http://github.com/bincrafters/conan-mongo-c-driver"
@@ -34,14 +34,13 @@ class MongoCDriverConan(ConanFile):
 
     def requirements(self):
         if not tools.os_info.is_macos and not tools.os_info.is_windows:
-            self.requires("openssl/1.1.1h")
+            self.requires("openssl/[~=1.1.1h]")
 
         if self.options.icu:
             self.requires("icu/64.2")
 
     def source(self):
-        tools.get("https://github.com/mongodb/mongo-c-driver/releases/download/{0}/mongo-c-driver-{0}.tar.gz".format(self.version),
-                  sha256="ad479a6d3499038ec19ca80a30dfa99277644bb884e424362935b06e2d5f7988")
+        tools.get("https://github.com/mongodb/mongo-c-driver/releases/download/{0}/mongo-c-driver-{0}.tar.gz".format(self.version))
         extracted_dir = self.name + "-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
 
